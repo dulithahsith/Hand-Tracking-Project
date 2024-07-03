@@ -4,7 +4,7 @@ import time
 
 
 class handDetector:
-    def __init__(self, img_mode=False, maxhands=2, minDetectionConfidence=0.3, minTrackingConfidence=0.3):
+    def __init__(self, img_mode=False, maxhands=2, minDetectionConfidence=0.7, minTrackingConfidence=0.7):
         self.img_mode = img_mode
         self.maxhands = maxhands
         self.minDetectionConfidence = minDetectionConfidence
@@ -40,8 +40,8 @@ class handDetector:
                 h, w, c = img.shape
                 cx, cy = int((lm.x*w)), int((lm.y*h))
                 lmList.append([id, cx, cy])
-                if draw:
-                    cv2.circle(img, (cx, cy), 10, (255, 0, 255), cv2.FILLED)
+                # if draw:
+                #     cv2.circle(img, (cx, cy), 10, (255, 0, 255), cv2.FILLED)
         return lmList
 
 
