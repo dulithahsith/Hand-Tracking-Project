@@ -33,16 +33,32 @@ class handDetector:
         return img
 
     def findPosition(self, img, handNo=0, draw=True):
-        lmList = []
+        lmList1 = []
+        lmList2 = []
         if self.results.multi_hand_landmarks:
-            myHand = self.results.multi_hand_landmarks[handNo]
+            if len(self.results.multi_hand_landmarks) != 2:
+                return lmList1, lmList2
+            a = 0
+            myHand = self.results.multi_hand_landmarks[0]
             for id, lm in enumerate(myHand.landmark):
                 h, w, c = img.shape
                 cx, cy = int((lm.x*w)), int((lm.y*h))
-                lmList.append([id, cx, cy])
+                lmList1.append([id, cx, cy])
                 # if draw:
                 #     cv2.circle(img, (cx, cy), 10, (255, 0, 255), cv2.FILLED)
-        return lmList
+            myHand = self.results.multi_hand_landmarks[1]
+            for id, lm in enumerate(myHand.landmark):
+                h, w, c = img.shape
+                cx, cy = int((lm.x*w)), int((lm.y*h))
+                lmList2.append([id, cx, cy])
+                # if draw:
+                #     cv2.circle(img, (cx, cy), 10, (255, 0, 255), cv2.FILLED)
+            if lmList1[4][1] > 320:
+                return lmList2, lmList1
+            else:
+                return lmList1, lmList2
+
+        return lmList1, lmList2
 
 
 def main():
